@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="template.xhtml">
+
+	<ui:define name="corpo">
+
+		<h:form id="formularioCadastroFuncionario">
+
+			<h:panelGrid columns="3">
+				<h:outputText value="Nome" />
+				<p:inputText id="nomeFuncionario" required="true"
+					requiredMessage="Preencher o Nome"
+					value="#{funcionarioMB.funcionario.nome}" />
+				<p:message for="nomeFuncionario" />
+
+				<h:outputText value="E-mail" />
+				<p:inputText id="emailFuncionario" required="true"
+					requiredMessage="Preencher o E-mail"
+					value="#{funcionarioMB.funcionario.email}" />
+				<p:message for="emailFuncionario" />
+
+				<h:outputText value="Senha" />
+				<p:inputText id="senhaFuncionario" required="true"
+					requiredMessage="Preencher a Senha"
+					value="#{funcionarioMB.funcionario.senha}" />
+				<p:message for="senhaFuncionario" />
+
+				<h:outputText value="Procentagem Venda" />
+				<p:inputText id="porcentagemFuncionario" required="true"
+					requiredMessage="Preencher a Porcentagem Venda"
+					value="#{funcionarioMB.funcionario.porcentagemComissaoVenda}" />
+				<p:message for="porcentagemFuncionario" />
+
+				<h:outputText value="Cidade" />
+				<p:selectOneMenu id="cidade"
+					value="#{funcionarioMB.funcionario.cidade}"
+					converter="converterCidade" filter="true"
+					filterMatchMode="startsWith">
+					<f:selectItems value="#{cidadeMB.cidades}" var="cid"
+						itemLabel="#{cid.nome}" itemValue="#{cid}" />
+				</p:selectOneMenu>
+				<p:message for="cidade" />
+
+				<h:outputText value="Permissão" />
+				<p:selectOneMenu id="permissao"
+					value="#{funcionarioMB.funcionario.perfil}" filter="true"
+					filterMatchMode="startsWith">
+					
+					<f:selectItem itemLabel="Admnistrador"
+					itemValue = "Admnistrador" />
+					
+					<f:selectItem itemLabel = "Vendedor"
+					itemValue  = "Vendedor"/>
+				</p:selectOneMenu>
+				<p:message for = "permissao"/>
+
+
+
+
+				<p:commandButton update="@form, formTabelaFuncionarios"
+					value="Cadastrar" actionListener="#{funcionarioMB.inserir()}" />
+			</h:panelGrid>
+		</h:form>
+		<br />
+		<h:form id="formTabelaFuncionarios">
+			<p:dataTable value="#{funcionarioMB.funcionarios}" var="cid">
+				<p:column headerText="ID">
+					<h:outputText value="#{cid.id}" />
+				</p:column>
+				<p:column headerText="Nome">
+					<h:outputText value="#{cid.nome}" />
+				</p:column>
+				<p:column headerText="Estado">
+					<h:outputText value="#{cid.cidade.nome}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:commandButton value="Alterar"
+						update="@form, formularioCadastroFuncionario">
+						<f:setPropertyActionListener value="#{cid}"
+							target="#{funcionarioMB.funcionario}" />
+					</p:commandButton>
+					<p:commandButton value="Excluir"
+						actionListener="#{funcionarioMB.excluir(cid.id)}" update="@form">
+						<p:confirm header="Confirmação" message="Deseja excluir??"
+							icon="ui-icon-alert" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+
+
+
+	</ui:define>
+
+</ui:composition>
+
+
+
+</html>

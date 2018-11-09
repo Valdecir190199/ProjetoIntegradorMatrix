@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.4.final using JasperReports Library version 6.0.4  -->
+<!-- 2018-10-16T16:06:20 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relEstado" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dcb2b98a-b10d-4935-b92d-6db4f2b21e91">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Relatorio"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT ID,NOME,SIGLA
+FROM ESTADO]]>
+	</queryString>
+	<field name="ID" class="java.lang.Integer"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="SIGLA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="30" uuid="14df319b-db18-4e9a-bbab-c2c279caaf2c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISTEMA DE CONTROLE]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="185" height="20" uuid="34a9f8c1-17bf-48e2-953d-7a584129ed99"/>
+				<textElement>
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Estado]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="185" height="30" uuid="8109c3a5-1e86-44c6-9e78-fc8f7891a672"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="0" width="185" height="30" uuid="4efc93c5-db9a-4553-b2bd-b90cc262d76a"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="0" width="185" height="30" uuid="aa0eadb7-474f-4261-bf99-c65eb9e89902"/>
+				<textElement>
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SIGLA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="185" height="30" uuid="70d86eae-75af-458f-b795-e98d8c687e01"/>
+				<textElement>
+					<font fontName="Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="0" width="185" height="30" uuid="8c735aaa-39d3-4746-b929-cdb1eb018548"/>
+				<textElement>
+					<font fontName="Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="0" width="185" height="30" uuid="7b94a3a4-0654-4f23-b84d-7a892fc207dd"/>
+				<textElement>
+					<font fontName="Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SIGLA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	
+			
+	
+<ui:composition template = "template.xhtml">
+
+	<ui:define name="corpo">
+	<p:commandButton value="Pesquisar Vendas" update = "tabelaData"  onclick="PF('dlg1').show();" />
+	<h:panelGrid columns="1" cellpadding="5">
+	
+	
+    
+ 
+ 
+ 		<p:growl id="mensagem"/>
+	<h:form id="formularioCabecalhoVenda">
+		<h:panelGrid columns="4">
+			<h:outputText value="Cliente" />
+			<p:selectOneMenu value="#{vendaMB.venda.cliente}"
+				converter="converterCliente" filter="true"
+				filterMatchMode="startsWith">
+				<f:selectItems value="#{clienteMB.clientes}" var="obj"
+					itemLabel="#{obj.nome}" itemValue="#{obj}" />
+			</p:selectOneMenu>
+			<h:outputText value="Data:" />
+			<p:calendar pattern="dd/MM/yyyy" 
+						value="#{vendaMB.venda.dataVenda}" />
+		</h:panelGrid>
+		<h:panelGrid columns="2">
+			<h:outputText value="Vendedor" />
+			<p:selectOneMenu value="#{vendaMB.venda.vendedor}"
+				converter="converterFuncionario" filter="true"
+				filterMatchMode="startsWith">
+				<f:selectItems value="#{funcionarioMB.funcionarios}" 
+								var="obj"
+								itemLabel="#{obj.nome}" 
+								itemValue="#{obj}" />			
+			</p:selectOneMenu>
+			<h:outputText value="Observação" />
+			<p:inputText value="#{vendaMB.venda.observacao}"/>
+		</h:panelGrid>
+<!-- 		INÍCIO ITENS DE VENDA -->
+		<h:panelGrid columns="5">
+			<h:outputText value="Produto" />
+			<p:selectOneMenu value="#{vendaMB.itensVenda.produto}"
+				converter="converterProduto" filter="true"
+				filterMatchMode="startsWith">
+				<f:selectItems value="#{produtoMB.produtos}" 
+								var="obj"
+								itemLabel="#{obj.descricao}" 
+								itemValue="#{obj}" />			
+			</p:selectOneMenu>
+			<h:outputText value="Quantidade:" />
+			<p:inputText id="inputQtd" value="#{vendaMB.itensVenda.quantidade}"/>
+			<p:commandButton value="OK" update="tabelaItensVenda,inputQtd"
+					actionListener="#{vendaMB.adicionarItem()}"/>
+		</h:panelGrid>
+<!-- 		FIM DO ITENS DE VENDA -->
+<p:dataTable id="tabelaItensVenda" value="#{vendaMB.listaItensVenda}" var="obj">
+	<p:column headerText="Produto">
+		<h:outputText value="#{obj.produto.descricao}" />
+	</p:column>
+		<p:column headerText="Quantidade">
+		<h:outputText value="#{obj.quantidade}" />
+	</p:column>		
+		<p:column headerText="Valor Unitário">
+		<h:outputText value="#{obj.valorUnitario}" />
+	</p:column>		
+		<p:column headerText="Valor Total">
+		<h:outputText value="#{obj.valotTotal}" />
+	</p:column>
+</p:dataTable>
+<p:commandButton value="Finalizar Venda"  
+	actionListener="#{vendaMB.finalizarVenda()}" 
+	update="mensagem,@form"/> 
+	</h:form>
+ 
+ <p:dialog header="Pesquisar Vendas Realizadas" widgetVar="dlg1" minHeight="40">
+ 
+
+		<p:dataTable id="tabelaData" value="#{vendaMB.listaVendas}"  
+                     var="obj">
+                    
+                 
+
+
+   <p:column headerText="Nome Cliente" >
+                         
+				<h:outputText value="#{obj.cliente.nome}" />
+			</p:column>
+			
+			   <p:column headerText="Funcionario" >
+                         
+				<h:outputText value="#{obj.vendedor.nome}" />
+			</p:column>
+			
+				<p:column headerText="Valor Total">
+		<h:outputText value="#{obj.valorTotalVenda}" >
+		
+		 <f:convertNumber pattern="¤#,##0.00" currencySymbol="R$" />
+		</h:outputText>
+	</p:column>	
+		
+		<p:column headerText="Data Venda">
+		
+		<h:outputText value="#{obj.dataVenda}" >
+		
+			<f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+		
+		</h:outputText>
+			
+
+	
+	</p:column>		
+		
+			
+			
+    </p:dataTable> 
+    
+</p:dialog>
+ 	
+	</h:panelGrid>
+	
+
+	</ui:define>
+
+</ui:composition>
+
+<!-- 	<p:messages id="mensagem"/>  -->
+
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<ui:composition template = "template.xhtml">
+
+	<ui:define name="corpo">
+	<h:form id="formularioCadastroProdutos">
+		<h:panelGrid columns="3">
+			<h:outputText value="Descrição" />
+			<p:inputText id="descricaoProduto" required="true"
+				requiredMessage="Preencher a Descrição"
+				value="#{produtoMB.produto.descricao}" />
+			<p:message for="descricaoProduto" />
+
+			<h:outputText value="Valor Venda" />
+			<p:inputText id="valorVendaProduto" required="true"
+				requiredMessage="Preencher o Valor de Venda"
+				value="#{produtoMB.produto.valorVenda}" />
+			<p:message for="valorVendaProduto" />
+
+			<h:outputText value="Quantidade em Estoque" />
+			<p:inputText id="quantidadeEstoqueProduto" required="true"
+				requiredMessage="Preencher a Quantidade em Estoque"
+				value="#{produtoMB.produto.quantidadeEstoque}" />
+			<p:message for="quantidadeEstoqueProduto" />
+
+
+			<p:commandButton update="@form, formTabelaClientes" value="Cadastrar"
+				actionListener="#{produtoMB.inserir()}" />
+		</h:panelGrid>
+	</h:form>
+	<br />
+	<h:form id="formTabelaClientes">
+		<p:dataTable value="#{produtoMB.produtos}" var="est">
+			<p:column headerText="ID">
+				<h:outputText value="#{est.id}" />
+			</p:column>
+			<p:column headerText="Descrição">
+				<h:outputText value="#{est.descricao}" />
+			</p:column>
+			<p:column headerText="Valor Venda">
+				<h:outputText value="#{est.valorVenda}" />
+			</p:column>
+			<p:column headerText="Opções">
+				<p:commandButton value="Alterar" update="formularioCadastroProdutos">
+					<f:setPropertyActionListener value="#{est}"
+						target="#{produtoMB.produto}" />
+				</p:commandButton>
+				<p:commandButton value="Excluir"
+					actionListener="#{produtoMB.excluir(est.id)}" update="@form">
+					<p:confirm header="Confirmação" message="Deseja excluir o estado?"
+						icon="ui-icon-alert" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+	</h:form>
+	</ui:define>
+
+</ui:composition>
+
+
+
+
+	
+
+</html>

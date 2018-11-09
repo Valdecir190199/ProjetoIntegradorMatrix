@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+
+<ui:composition template = "template.xhtml">
+
+	<ui:define name="corpo">
+	
+	<h:form id="formularioCadastroFornecedores">
+		<h:panelGrid columns="3">
+			<h:outputText value="Nome" />
+			<p:inputText id="nomeFornecedor" required="true"
+				requiredMessage="Preencher o Nome" value="#{fornecedorMB.fornecedor.nome}" />
+			<p:message for="nomeFornecedor" />
+			<h:outputText value="CNPJ do Fornecedor" />
+			<p:inputText id="cnpj" required="true"
+				requiredMessage="Preencher o nome do Fornecedor" value="#{fornecedorMB.fornecedor.cnpj}" />
+			<p:message for="cnpj" />
+			<h:outputText value="Fone?" />
+			<p:inputText id="fone" required="true"
+				requiredMessage="Preencher o nome do Fornecedor" value="#{fornecedorMB.fornecedor.fone}" />
+			<p:message for="fone" />
+			<h:outputText value="Que Tipos de Produtos o Fornecedor Fornece?" />
+			<p:inputText id="des" required="true"
+				requiredMessage="Preencher o nome do Fornecedor" value="#{fornecedorMB.fornecedor.descricao}" />
+			<p:message for="des" />
+			
+			
+			
+			
+			<p:commandButton update="@form, formTabelaFornecedores" value="Cadastrar"
+				actionListener="#{fornecedorMB.inserir()}" />
+		</h:panelGrid>
+	</h:form>
+	<br />
+	<h:form id="formTabelaFornecedores">
+		<p:dataTable value="#{fornecedorMB.fornecedores}" var="obj">
+			<p:column headerText="ID">
+				<h:outputText value="#{obj.id}" />
+			</p:column>
+			<p:column headerText="Nome">
+				<h:outputText value="#{obj.nome}" />
+			</p:column>
+			<p:column headerText="Fone">
+				<h:outputText value="#{obj.fone}" />
+			</p:column>
+			<p:column headerText="Plataforma">
+				<h:outputText value="#{obj.descricao}" />
+			</p:column>
+			<p:column headerText="Opções">
+				<p:commandButton value="Alterar" update="formularioCadastroFornecedores">
+					<f:setPropertyActionListener value="#{obj}"
+						target="#{fornecedorMB.fornecedor}" />
+				</p:commandButton>
+				<p:commandButton value="Excluir"
+					actionListener="#{fornecedorMB.excluir(obj.id)}" update="@form">
+					<p:confirm header="Confirmação" message="Deseja excluir o fornecedor?"
+						icon="ui-icon-alert" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+	</h:form>
+	</ui:define>
+
+</ui:composition>
+
+	
+
+	
+
+</html>

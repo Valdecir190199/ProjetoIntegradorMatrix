@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+
+<ui:composition template = "template.xhtml">
+
+	<ui:define name="corpo">
+	<h:form id="formularioCadastroPlataformas">
+		<h:panelGrid columns="3">
+		
+			  <p:outputLabel  value="Fornecedor:" />
+			<p:selectOneMenu id="fornecedor"
+				value="#{fornecedorMB.fornecedor.nome}"
+				converter="converterFornecedor" filter="true"
+				filterMatchMode="startsWith">
+				<f:selectItems value="#{fornecedorMB.fornecedores}" var="obj"
+					itemLabel="#{obj.nome}" itemValue="#{obj}" />
+			</p:selectOneMenu>
+			<br></br>
+		
+		    <h3 style="margin-top:0"></h3><br></br>
+    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+        <p:outputLabel for="console" value="Plataformas:" />
+        <p:selectOneRadio id="console" value="#{midiaLocMB.midiaLoc.plataforma}">
+            <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" /><br></br>
+            <f:selectItem itemLabel="PS4" itemValue="PS4" /><br></br>
+            <f:selectItem itemLabel="Wii U" itemValue="Wii U" /><br></br>
+        </p:selectOneRadio>
+    </h:panelGrid>
+		
+			
+			<p:commandButton update="@form, formTabelaPlataformas" value="Cadastrar"
+				actionListener="#{midiaLocMB.inserir()}" />
+		</h:panelGrid>
+	</h:form>
+	<br />
+	<h:form id="formTabelaPlataformas">
+		<p:dataTable value="#{midiaLocMB.midiaLocs}" var="mid">
+			<p:column headerText="ID">
+				<h:outputText value="#{mid.id}" />
+			</p:column>
+			<p:column headerText="Plataforma">
+				<h:outputText value="#{mid.plataforma}" />
+			</p:column>
+			<p:column headerText="Nome">
+				<p:selectOneMenu id="fornecedor"
+				value="#{fornecedorMB.fornecedor.nome}"
+				converter="converterFornecedor" filter="true"
+				filterMatchMode="startsWith">
+				<f:selectItems value="#{fornecedorMB.fornecedores}" var="obj"
+					itemLabel="#{obj.nome}" itemValue="#{obj}" />
+			</p:selectOneMenu>
+			</p:column>
+			
+			
+			
+			
+			<p:column headerText="Opções">
+				<p:commandButton value="Alterar" update="@form,formTabelaPlataformas">
+					<f:setPropertyActionListener value="#{mid}"
+						target="#{midiaLocMB.midiaLoc}" />
+				</p:commandButton>
+				<p:commandButton value="Excluir"
+					actionListener="#{midiaLocMB.excluir(mid.id)}" update="@form,formTabelaPlataformas">
+					<p:confirm header="Confirmação" message="Deseja excluir o Usuario?"
+						icon="ui-icon-alert" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+	</h:form>
+
+
+	
+	
+	
+	</ui:define>
+
+</ui:composition>
+
+
+	
+
+
+
+</html>

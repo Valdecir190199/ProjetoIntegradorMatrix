@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="template.xhtml">
+
+
+
+
+	<ui:define name="corpo">
+
+
+
+		<hr />
+		<br />
+		<h:form id="formularioCadastroCidades">
+
+			<h:panelGrid columns="3">
+				<h:outputText value="Nome" />
+				<p:inputText id="nomeCidade" required="true"
+					requiredMessage="Preencher o Nome" value="#{cidadeMB.cidade.nome}" />
+				<p:message for="nomeCidade" />
+
+				<h:outputText value="Estado" />
+				<p:selectOneMenu id="estado" value="#{cidadeMB.cidade.estado}"
+					converter="converterEstado" filter="true"
+					filterMatchMode="startsWith">
+					<f:selectItems value="#{estadoMB.estados}" var="est"
+						itemLabel="#{est.nome}" itemValue="#{est}" />
+				</p:selectOneMenu>
+				<p:message for="estado" />
+
+				<p:commandButton update="@form, formTabelaCidades" value="Cadastrar"
+					actionListener="#{cidadeMB.inserir()}" />
+			</h:panelGrid>
+		</h:form>
+		<br />
+
+		<h:form id="formTabelaCidades">
+			<p:dataTable value="#{cidadeMB.cidades}" var="cid">
+				<p:column headerText="ID">
+					<h:outputText value="#{cid.id}" />
+				</p:column>
+				<p:column headerText="Nome">
+					<h:outputText value="#{cid.nome}" />
+				</p:column>
+				<p:column headerText="Estado">
+					<h:outputText value="#{cid.estado.nome}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:commandButton value="Alterar" update="formularioCadastroCidades">
+						<f:setPropertyActionListener value="#{cid}"
+							target="#{cidadeMB.cidade}" />
+					</p:commandButton>
+					<p:commandButton value="Excluir"
+						actionListener="#{cidadeMB.excluir(cid.id)}" update="@form">
+						<p:confirm header="Confirmação" message="Deseja excluir a Cidade?"
+							icon="ui-icon-alert" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+
+<ui:composition template="template.xhtml">
+
+
+	<ui:define name="corpo">
+	
+	
+	<h:form id="formularioCadastroDependentes">
+		<h:panelGrid columns="3">
+			<h:outputText value="Nome" />
+			<p:inputText id="nomeDependente" required="true"
+				requiredMessage="Preencher o Nome" value="#{dependenteMB.dependente.nome}" />
+			<p:message for="nomeDependente" />
+			<h:outputText value="Data de Nascimento" />
+			<p:inputText id="dataDependente" required="true"
+				requiredMessage="Preencher a Data" value="#{dependenteMB.dependente.data}" />
+			<p:message for="dataDependente" />
+				<h:outputText value="Dependente De Quem?" />
+			<p:selectOneMenu id="dependente" value="#{clienteMB.cliente.nome}"
+				converter="converterCliente" filter="true"
+				filterMatchMode="startsWith">
+				<f:selectItems value="#{clienteMB.clientes}" var="cli"
+					itemLabel="#{cli.nome}" itemValue="#{cli}" />
+			</p:selectOneMenu>
+			<p:commandButton update="@form, formTabelaDependentes" value="Cadastrar"
+				actionListener="#{dependenteMB.inserir()}" />
+		</h:panelGrid>
+	</h:form>
+	<br />
+	<h:form id="formTabelaDependentes">
+		<p:dataTable value="#{dependenteMB.dependentes}" var="obj">
+			<p:column headerText="ID">
+				<h:outputText value="#{obj.id}" />
+			</p:column>
+			<p:column headerText="Nome">
+				<h:outputText value="#{obj.nome}" />
+			</p:column>
+			<p:column headerText="Data de Nascimento">
+				<h:outputText value="#{obj.data}" />
+			</p:column>
+			
+			
+			
+			
+			<p:column headerText="Opções">
+				<p:commandButton value="Alterar" update="formularioCadastroDependentes">
+					<f:setPropertyActionListener value="#{obj}"
+						target="#{dependenteMB.dependente}" />
+				</p:commandButton>
+				<p:commandButton value="Excluir"
+					actionListener="#{dependenteMB.excluir(obj.id)}" update="@form">
+					<p:confirm header="Confirmação" message="Deseja excluir o dependente?"
+						icon="ui-icon-alert" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+	</h:form>
+	
+	
+	
+	</ui:define>
+
+
+</ui:composition>
+
+
+</html>

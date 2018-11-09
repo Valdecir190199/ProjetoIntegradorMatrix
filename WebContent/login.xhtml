@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<style>
+.container {
+	width: 100vw;
+	height: 100vh;
+	background: #6C7A89;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.box {
+	text-align: center; 
+	width : 200px;
+	height: 200px;
+	background: #fff;
+	width: 250px;
+	background-color: #a3a3a3;
+	border: solid 1px #5b5b5b;
+	border-radius: 10px;
+}
+
+body {
+	margin: 0px;
+}
+</style>
+
+</h:head>
+<body>
+
+	<div class="container">
+		<div class="box">
+
+			<h:outputText value="E-mail ou senha incorretos"
+				rendered="#{param.error==true}" />
+
+			<h:panelGrid columns="1" styleClass="col-md-12  col-xs-12">
+				<form id="frmLogin" action="j_spring_security_check" method="post">
+					<label>E-mail</label>
+					<p:inputText required="true" id="j_username"
+						styleClass="col-md-12 col-xs-12"  placeholder="Digite seu e-mail" style="text-align:center"/>
+
+
+					<label>Senha</label>
+					<p:password required="true" id="j_password"
+						styleClass="col-md-12 col-xs-12"   placeholder="Digite sua senha" style="text-align:center"/>
+
+					<h:commandButton value="Entrar"
+						styleClass="ui-priority-primary btn btn-block" />
+
+					<a href="recuperar-senha.jsf">Esqueceu a senha?</a>
+				</form>
+			</h:panelGrid>
+		</div>
+
+	</div>
+
+
+
+
+</body>
+</html>
+

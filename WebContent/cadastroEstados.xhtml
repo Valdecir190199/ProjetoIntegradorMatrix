@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template = "template.xhtml">
+
+	<ui:define name="corpo">
+	
+	<h:panelGrid columns="1" cellpadding="5">
+	
+	    <p:commandButton value="Novo Estado" type="button" onclick="PF('dlg2').show();" />
+	<br/>
+	
+	<h:form>
+	
+	<p:commandButton value="Relatorio" actionListener="#{estadoMB.chamarRelatorio()}" ajax="false"/>
+	
+	</h:form>
+	
+	
+	<h:form id="formTabelaEstados">
+	
+		<p:dataTable value="#{estadoMB.estados}" var="est">
+			<p:column headerText="ID">
+				<h:outputText value="#{est.id}" />
+			</p:column>
+			<p:column headerText="Nome">
+				<h:outputText value="#{est.nome}" />
+			</p:column>
+			<p:column headerText="Sigla">
+				<h:outputText value="#{est.sigla}" />
+			</p:column>
+			<p:column headerText="Opções">
+				<p:commandButton value="Alterar" update="formularioCadastroEstados">
+					<f:setPropertyActionListener value="#{est}"
+						target="#{estadoMB.estado}" />
+				</p:commandButton>
+				<p:commandButton value="Excluir"
+					actionListener="#{estadoMB.excluir(est.id)}" update="@form">
+					<p:confirm header="Confirmação" message="Deseja excluir o estado?"
+						icon="ui-icon-alert" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+		
+
+	</h:form>
+			
+
+	</h:panelGrid>
+	
+		<p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true" height="100">
+		
+		
+   
+
+	<h:form id="formularioCadastroEstados">
+		<h:panelGrid columns="3">
+			<h:outputText value="Nome" />
+			<p:inputText id="nomeEstado" required="true"
+				requiredMessage="Preencher o Nome" value="#{estadoMB.estado.nome}" />
+			<p:message for="nomeEstado" />
+			<h:outputText value="Sigla" />
+			<p:inputText id="siglaEstado" required="true"
+				requiredMessage="Preencher a Sigla" value="#{estadoMB.estado.sigla}" />
+			<p:message for="siglaEstado" />
+			<p:commandButton update="@form, formTabelaEstados" value="Cadastrar"
+				actionListener="#{estadoMB.inserir()}" />
+		</h:panelGrid>
+	</h:form>
+	
+</p:dialog>   
+</ui:define>
+
+</ui:composition>
+
+</html>
